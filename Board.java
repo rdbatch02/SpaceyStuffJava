@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
 import javax.swing.*;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.Random;
 public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
-    private Craft craft;
+    public Craft craft;
     private Enemy enemy;
     private int score;
     private int lives;
@@ -26,6 +29,7 @@ public class Board extends JPanel implements ActionListener {
 
 
     private JLabel scoreBoard;
+    private JLabel resetRequest;
     private Font sans;
 
     private final int STAR_SIZE = 4;
@@ -33,6 +37,7 @@ public class Board extends JPanel implements ActionListener {
     public Board() {
 
         addKeyListener(new TAdapter());
+        /*addKeyListener(new RAdapter());*/
         setFocusable(true);
         setBackground(Color.black);
         setDoubleBuffered(true);
@@ -47,7 +52,16 @@ public class Board extends JPanel implements ActionListener {
         scoreBoard = new JLabel("Score: " + String.valueOf(score) + " Lives: " + String.valueOf(lives));
         scoreBoard.setForeground(Color.white);
         scoreBoard.setFont(sans);
+        /*scoreBoard.setVerticalAlignment(JLabel.TOP);*/
         add(scoreBoard);
+
+        resetRequest = new JLabel("Press r to play again");
+        resetRequest.setForeground(Color.white);
+        resetRequest.setFont(sans);
+        /*resetRequest.setHorizontalAlignment(JLabel.CENTER);
+        resetRequest.setVerticalAlignment(JLabel.CENTER);*/
+        resetRequest.setVisible(false);
+
         
 
         timer = new Timer(5, this);
@@ -86,12 +100,28 @@ public class Board extends JPanel implements ActionListener {
         }
 
         scoreBoard.setText("Score: " + String.valueOf(score) + " Lives: " + String.valueOf(lives));
-        if (craft.isAlive() == false) {
-            scoreBoard.setText("You Lose! Final Score: " + String.valueOf(score));
+        if (!craft.isAlive()) {
+            if (!craft.isReset_active()) {
+                scoreBoard.setText("You Lose! Final Score: " + String.valueOf(score));
+                setLayout(new GridBagLayout());
+                GridBagConstraints gbc = new GridBagConstraints();
+
+                gbc.anchor = GridBagConstraints.CENTER;
+                gbc.gridy = 1;
+
+                add(resetRequest, gbc);
+                resetRequest.setVisible(true);
+            }
         }
 
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
+    }
+
+    public void reset() {
+        craft.setReset_active(false);
+        this.removeAll();
+        SpaceyStuff.reset();
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -128,8 +158,27 @@ public class Board extends JPanel implements ActionListener {
             }
         }
         craft.move();
+
         repaint();
+        if (craft.isReset_active())
+            reset();
     }
+
+    /*    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_R && !craft.isAlive()) {
+            reset();
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_R && !craft.isAlive()) {
+            reset();
+        }
+    }*/
 
     private class TAdapter extends KeyAdapter {
 
@@ -140,5 +189,18 @@ public class Board extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             craft.keyPressed(e);
         }
+
+
     }
+
+    /*private class RAdapter extends KeyAdapter {
+        public void keyReleased(KeyEvent e) {
+            this.keyReleased(e);
+        }
+        public void keyPressed(KeyEvent e) {
+            this.keyPressed(e);
+        }
+
+
+    }*/
 }

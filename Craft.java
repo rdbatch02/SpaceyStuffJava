@@ -24,6 +24,8 @@ public class Craft {
     private final int CRAFT_SIZE = 10;
     private final int CRAFT_SPEED = 2;
 
+    private boolean reset_active = false;
+
     private Random generator = new Random();
 
     //private int randomX = generator.nextInt(750);
@@ -71,6 +73,10 @@ public class Craft {
 
         if (key == KeyEvent.VK_SPACE) {
             fire();
+        }
+
+        if (key == KeyEvent.VK_R && !isAlive()) {
+            reset_active = true;
         }
 
 /*        if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
@@ -166,5 +172,17 @@ public class Craft {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public boolean gameOver() {
+        return !alive;
+    }
+
+    public boolean isReset_active() {
+        return reset_active;
+    }
+
+    public void setReset_active(boolean reset_active) {
+        this.reset_active = reset_active;
     }
 }
