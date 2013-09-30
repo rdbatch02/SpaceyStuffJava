@@ -158,6 +158,7 @@ public class Board extends JPanel implements ActionListener {
             }
         }
         craft.move();
+        craft.cool();
 
         repaint();
         if (craft.isReset_active())

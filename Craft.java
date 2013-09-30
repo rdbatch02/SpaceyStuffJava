@@ -16,6 +16,7 @@ public class Craft {
     private int dy;
     private int x;
     private int y;
+    private int heat;
     private Image image;
     private boolean alive;
 
@@ -37,6 +38,7 @@ public class Craft {
         missiles = new ArrayList();
         x = 40;
         y = 300;
+        heat = 0;
         alive = true;
     }
 
@@ -141,7 +143,19 @@ public class Craft {
     }*/
 
     public void fire() {
-        missiles.add(new Missile(x + CRAFT_SIZE/2, y));
+        if (heat <= 1000) {
+            missiles.add(new Missile(x + CRAFT_SIZE/2, y));
+            heat += 125;
+        }
+    }
+
+    public void cool() {
+        if (heat > 0)
+            heat--;
+    }
+
+    public int getHeat() {
+        return heat;
     }
 
     public void keyReleased(KeyEvent e) {
