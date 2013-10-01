@@ -81,14 +81,6 @@ public class Craft {
             reset_active = true;
         }
 
-/*        if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
-            dx = 0;
-        }
-
-        if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
-            dx = 0;
-        }*/
-
         if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
             dy = -CRAFT_SPEED;
         }
@@ -186,10 +178,6 @@ public class Craft {
 
     public boolean isAlive() {
         return alive;
-    }
-
-    public boolean gameOver() {
-        return !alive;
     }
 
     public boolean isReset_active() {

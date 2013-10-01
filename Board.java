@@ -21,23 +21,22 @@ public class Board extends JPanel implements ActionListener {
     private Enemy enemy;
     private int score;
     private int lives;
-    private String score_str;
+    //private String score_str;
 
     private Random generator = new Random();
-    private int randomX = generator.nextInt(750);
-    private int randomY = generator.nextInt(550);
+    /*private int randomX = generator.nextInt(750);
+    private int randomY = generator.nextInt(550);*/
 
 
     private JLabel scoreBoard;
     private JLabel resetRequest;
     private Font sans;
 
-    private final int STAR_SIZE = 4;
+//    private final int STAR_SIZE = 4; We might need this later for star generation
 
     public Board() {
 
         addKeyListener(new TAdapter());
-        /*addKeyListener(new RAdapter());*/
         setFocusable(true);
         setBackground(Color.black);
         setDoubleBuffered(true);
@@ -52,14 +51,11 @@ public class Board extends JPanel implements ActionListener {
         scoreBoard = new JLabel("Score: " + String.valueOf(score) + " Lives: " + String.valueOf(lives));
         scoreBoard.setForeground(Color.white);
         scoreBoard.setFont(sans);
-        /*scoreBoard.setVerticalAlignment(JLabel.TOP);*/
         add(scoreBoard);
 
         resetRequest = new JLabel("Press r to play again");
         resetRequest.setForeground(Color.white);
         resetRequest.setFont(sans);
-        /*resetRequest.setHorizontalAlignment(JLabel.CENTER);
-        resetRequest.setVerticalAlignment(JLabel.CENTER);*/
         resetRequest.setVisible(false);
 
         
@@ -76,13 +72,12 @@ public class Board extends JPanel implements ActionListener {
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
-        //setBackground(Color.black);
     }
 
     public void paint(Graphics g) {
         super.paint(g);
 
-        score_str = String.valueOf(score);
+        //score_str = String.valueOf(score);
 
         Graphics2D g2d = (Graphics2D) g;
 
@@ -125,7 +120,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        setBackground(Color.black);
+        //setBackground(Color.black); Only needed this for flickering
         ArrayList ms = craft.getMissiles();
 
         for (int i = 0; i < ms.size(); i++) {
@@ -133,7 +128,7 @@ public class Board extends JPanel implements ActionListener {
             if (m.isVisible()) {
                 m.move();
                 if ((m.getX() >= enemy.getXBoxNeg() && m.getX() <= enemy.getXBoxPos()) && (m.getY() >= enemy.getYBoxNeg() && m.getY() <= enemy.getYBoxPos())) {
-                    flicker();
+                    //flicker(); This method is kinda broken. Removing it for now until I decide what to do with it.
                     enemy.setAlive(false);
                     enemy = new Enemy();
                     ms.remove(i);
@@ -165,22 +160,6 @@ public class Board extends JPanel implements ActionListener {
             reset();
     }
 
-    /*    public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_R && !craft.isAlive()) {
-            reset();
-        }
-    }
-
-    public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_R && !craft.isAlive()) {
-            reset();
-        }
-    }*/
-
     private class TAdapter extends KeyAdapter {
 
         public void keyReleased(KeyEvent e) {
@@ -190,18 +169,5 @@ public class Board extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             craft.keyPressed(e);
         }
-
-
     }
-
-    /*private class RAdapter extends KeyAdapter {
-        public void keyReleased(KeyEvent e) {
-            this.keyReleased(e);
-        }
-        public void keyPressed(KeyEvent e) {
-            this.keyPressed(e);
-        }
-
-
-    }*/
 }
