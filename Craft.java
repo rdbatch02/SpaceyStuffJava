@@ -10,8 +10,6 @@ import java.util.Random;
 
 public class Craft {
 
-    private String craft = "SpaceShip.png";
-
     private int dx;
     private int dy;
     private int x;
@@ -27,7 +25,13 @@ public class Craft {
 
     private boolean reset_active = false;
 
+    private String[] ships = new String[]{"images/SpaceShip.png", "images/SpaceShip2.png"};
+
     private Random generator = new Random();
+
+    private int randomShip = generator.nextInt(2);
+
+    private String craft = ships[randomShip];
 
     //private int randomX = generator.nextInt(750);
     //private int randomY = generator.nextInt(550);

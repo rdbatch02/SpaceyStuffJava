@@ -10,17 +10,13 @@ public class Enemy {
 
     //private String enemy = "BaddieShip.png";
 
-    private int dx;
-    private int dy;
     private int x;
     private int y;
     private Image image;
     private boolean alive;
 
-    private ArrayList missiles;
-    private String[] ships = new String[]{"BaddieShip.png", "BaddieShip_2.png"};
+    private String[] ships = new String[]{"images/BaddieShip.png", "images/BaddieShip2.png"};
 
-    private final int CRAFT_SIZE = 10;
     private final int ENEMY_SPEED = 2;
 
     private Random generator = new Random();
@@ -34,7 +30,6 @@ public class Enemy {
     public Enemy() {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(enemy));
         image = ii.getImage();
-        missiles = new ArrayList();
         x = 850;
         y = randomY;
         alive = true;

@@ -16,7 +16,7 @@ public class Missile {
     private final int MISSILE_SPEED = 3;
 
     public Missile(int x, int y) {
-        ImageIcon ii = new ImageIcon(this.getClass().getResource("PewPew.png"));
+        ImageIcon ii = new ImageIcon(this.getClass().getResource("images/PewPew.png"));
         image = ii.getImage();
         visible = true;
         this.x = x;

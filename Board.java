@@ -12,7 +12,7 @@ import java.awt.GridBagLayout;
 import javax.swing.*;
 
 import java.util.ArrayList;
-import java.util.Random;
+//import java.util.Random;
 
 public class Board extends JPanel implements ActionListener {
 
@@ -21,12 +21,6 @@ public class Board extends JPanel implements ActionListener {
     private Enemy enemy;
     private int score;
     private int lives;
-    //private String score_str;
-
-    private Random generator = new Random();
-    /*private int randomX = generator.nextInt(750);
-    private int randomY = generator.nextInt(550);*/
-
 
     private JLabel scoreBoard;
     private JLabel resetRequest;
