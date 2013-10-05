@@ -58,7 +58,7 @@ public class Board extends JPanel implements ActionListener {
         timer.start();
     }
 
-    public void flicker() {
+/*    public void flicker() {
         System.out.println("Boom");
         setBackground(Color.white);
         try {
@@ -66,7 +66,7 @@ public class Board extends JPanel implements ActionListener {
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
-    }
+    }*/
 
     public void paint(Graphics g) {
         super.paint(g);
@@ -154,6 +154,7 @@ public class Board extends JPanel implements ActionListener {
             reset();
     }
 
+    //TODO: ReWrite this so it uses KeyBindings instead of a KeyListener.
     private class TAdapter extends KeyAdapter {
 
         public void keyReleased(KeyEvent e) {
