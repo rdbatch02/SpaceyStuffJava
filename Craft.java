@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class Craft {
 
-    private int dx;
+    //private int dx;
     private int dy;
     private int x;
     private int y;
@@ -73,6 +73,14 @@ public class Craft {
         return missiles;
     }
 
+    public void setDy(int dy) {
+        this.dy = dy;
+    }
+
+    public int getCRAFT_SPEED() {    //Might need this one day if we want to adjust game difficulty
+        return CRAFT_SPEED;
+    }
+
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
@@ -86,10 +94,12 @@ public class Craft {
         }
 
         if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
+            //setDy(-CRAFT_SPEED);
             dy = -CRAFT_SPEED;
         }
 
         if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
+            //setDy(CRAFT_SPEED);
             dy = CRAFT_SPEED;
         }
     }
@@ -167,10 +177,12 @@ public class Craft {
         }*/
 
         if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
+            //setDy(0);
             dy = 0;
         }
 
         if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
+            //setDy(0);
             dy = 0;
         }
     }

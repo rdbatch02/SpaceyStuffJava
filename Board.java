@@ -31,7 +31,6 @@ public class Board extends JPanel implements ActionListener {
     public Board() {
 
         addKeyListener(new TAdapter());
-        setFocusable(true);
         setBackground(Color.black);
         setDoubleBuffered(true);
 
@@ -56,6 +55,7 @@ public class Board extends JPanel implements ActionListener {
 
         timer = new Timer(5, this);
         timer.start();
+        setFocusable(true);
     }
 
 /*    public void flicker() {
@@ -88,7 +88,10 @@ public class Board extends JPanel implements ActionListener {
             g2d.drawImage(m.getImage(), m.getX(), m.getY(), this);
         }
 
-        scoreBoard.setText("Score: " + String.valueOf(score) + " Lives: " + String.valueOf(lives));
+        if (craft.getHeat() >= 950)
+            scoreBoard.setText("Weapon Overheat!");
+        else
+            scoreBoard.setText("Score: " + String.valueOf(score) + " Lives: " + String.valueOf(lives));
         if (!craft.isAlive()) {
             if (!craft.isReset_active()) {
                 scoreBoard.setText("You Lose! Final Score: " + String.valueOf(score));
@@ -114,7 +117,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        //setBackground(Color.black); Only needed this for flickering
+        //setBackground(Color.black); //Only needed this for flickering
         ArrayList ms = craft.getMissiles();
 
         for (int i = 0; i < ms.size(); i++) {
@@ -122,7 +125,6 @@ public class Board extends JPanel implements ActionListener {
             if (m.isVisible()) {
                 m.move();
                 if ((m.getX() >= enemy.getXBoxNeg() && m.getX() <= enemy.getXBoxPos()) && (m.getY() >= enemy.getYBoxNeg() && m.getY() <= enemy.getYBoxPos())) {
-                    //flicker(); This method is kinda broken. Removing it for now until I decide what to do with it.
                     enemy.setAlive(false);
                     enemy = new Enemy();
                     ms.remove(i);
@@ -154,7 +156,6 @@ public class Board extends JPanel implements ActionListener {
             reset();
     }
 
-    //TODO: ReWrite this so it uses KeyBindings instead of a KeyListener.
     private class TAdapter extends KeyAdapter {
 
         public void keyReleased(KeyEvent e) {

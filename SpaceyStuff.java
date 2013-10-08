@@ -31,7 +31,7 @@ public class SpaceyStuff extends JFrame {
     public static void main(String[] args) {
         //System.out.println("Let's do this!");
         game = new SpaceyStuff();
-        reset(); //This is a terrible band-aid, but this should hopefully fix the issue with input not working on the first init.
+        //reset(); //This is a terrible band-aid, but this should hopefully fix the issue with input not working on the first init. Removed for now.
     }
 
 }
