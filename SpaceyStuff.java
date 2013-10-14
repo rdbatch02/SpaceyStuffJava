@@ -16,7 +16,7 @@ public class SpaceyStuff extends JFrame {
         setTitle("Spacey Stuff");
         setResizable(false);
         setVisible(true);
-        System.setProperty("sun.java2d.noddraw", Boolean.TRUE.toString()); //Fix for super slow-mo on first run caused by Aero.
+        //System.setProperty("sun.java2d.noddraw", Boolean.TRUE.toString()); //Fix for super slow-mo on first run caused by Aero.
         ImageIcon taskbarIcon = new ImageIcon("images/taskbar_icon.gif");
         setIconImage(taskbarIcon.getImage());
     }

@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 //import java.util.Random;
 
@@ -19,8 +20,11 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     public Craft craft;
     private Enemy enemy;
+    private Asteroid asteroid;
     private int score;
     private int lives;
+
+    private int visible_timer = 100;
 
     private JLabel scoreBoard;
     private JLabel resetRequest;
@@ -32,10 +36,11 @@ public class Board extends JPanel implements ActionListener {
 
         addKeyListener(new TAdapter());
         setBackground(Color.black);
-        setDoubleBuffered(true);
+        //setDoubleBuffered(true);
 
         craft = new Craft();
         enemy = new Enemy();
+        asteroid = new Asteroid();
         score = 0;
         lives = 3;
 
@@ -46,7 +51,7 @@ public class Board extends JPanel implements ActionListener {
         scoreBoard.setFont(sans);
         add(scoreBoard);
 
-        resetRequest = new JLabel("Press r to play again");
+        resetRequest = new JLabel("Press R to play again");
         resetRequest.setForeground(Color.white);
         resetRequest.setFont(sans);
         resetRequest.setVisible(false);
@@ -58,16 +63,6 @@ public class Board extends JPanel implements ActionListener {
         setFocusable(true);
     }
 
-/*    public void flicker() {
-        System.out.println("Boom");
-        setBackground(Color.white);
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-    }*/
-
     public void paint(Graphics g) {
         super.paint(g);
 
@@ -75,11 +70,22 @@ public class Board extends JPanel implements ActionListener {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.drawImage(craft.getImage(), craft.getX(), craft.getY(), this);
+        if (craft.isVisible())
+            g2d.drawImage(craft.getImage(), craft.getX(), craft.getY(), this);
+        else {
+            visible_timer--;
+            if (visible_timer == 0) {
+                craft.reset();
+                visible_timer = 100;
+            }
+        }
 
         if (enemy.isAlive()) {
             g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
         }
+
+        if (asteroid.isActive() && craft.isAlive())
+            g2d.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
 
         ArrayList ms = craft.getMissiles();
 
@@ -148,8 +154,24 @@ public class Board extends JPanel implements ActionListener {
                 enemy = new Enemy();
             }
         }
-        craft.move();
-        craft.cool();
+        if (craft.isVisible()) {
+            craft.move();
+            craft.cool();
+        }
+
+        asteroid.move();
+
+        if (!asteroid.isActive()) {
+            asteroid = new Asteroid();
+            asteroid.setActive(true);
+        }
+        else {
+            if (craft.getX() >= asteroid.getXBoxNeg() && craft.getX() <= asteroid.getXBoxPos() && craft.getY() >= asteroid.getYBoxNeg() && craft.getY() <= asteroid.getYBoxPos()) {
+                lives--;
+                asteroid.setActive(false);
+                craft.setVisible(false);
+            }
+        }
 
         repaint();
         if (craft.isReset_active())

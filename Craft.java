@@ -17,6 +17,7 @@ public class Craft {
     private int heat;
     private Image image;
     private boolean alive;
+    private boolean visible;
 
     private ArrayList missiles;
 
@@ -44,6 +45,7 @@ public class Craft {
         y = 300;
         heat = 0;
         alive = true;
+        visible = true;
     }
 
 
@@ -73,10 +75,6 @@ public class Craft {
         return missiles;
     }
 
-    public void setDy(int dy) {
-        this.dy = dy;
-    }
-
     public int getCRAFT_SPEED() {    //Might need this one day if we want to adjust game difficulty
         return CRAFT_SPEED;
     }
@@ -94,12 +92,10 @@ public class Craft {
         }
 
         if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
-            //setDy(-CRAFT_SPEED);
             dy = -CRAFT_SPEED;
         }
 
         if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
-            //setDy(CRAFT_SPEED);
             dy = CRAFT_SPEED;
         }
     }
@@ -164,6 +160,41 @@ public class Craft {
         return heat;
     }
 
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+        reset();
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public boolean isReset_active() {
+        return reset_active;
+    }
+
+    public void setReset_active(boolean reset_active) {
+        this.reset_active = reset_active;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public void setHeat(int heat) {
+        this.heat = heat;
+    }
+
+    public void reset() {
+        setHeat(0);
+        setVisible(true);
+        this.y = 300;
+    }
+
     public void keyReleased(KeyEvent e) {
 
         int key = e.getKeyCode();
@@ -185,22 +216,5 @@ public class Craft {
             //setDy(0);
             dy = 0;
         }
-    }
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-        this.x = -9999;
-        this.y = -9999;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public boolean isReset_active() {
-        return reset_active;
-    }
-
-    public void setReset_active(boolean reset_active) {
-        this.reset_active = reset_active;
     }
 }

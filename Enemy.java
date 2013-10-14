@@ -39,20 +39,6 @@ public class Enemy {
 
     public void move() {
         x -= ENEMY_SPEED;
-/*        if (x <= -80) {
-            x = 800;
-        }
-        else if (x >= 800) {
-            x = -80;
-        }
-        else if (y <= -50) {
-            y = 600;
-        }
-        else if (y >= 600) {
-            y = -50;
-        }
-        x += dx;
-        y += dy;*/
     }
 
     public int getX() {
