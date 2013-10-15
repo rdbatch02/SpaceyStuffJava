@@ -79,71 +79,6 @@ public class Craft {
         return CRAFT_SPEED;
     }
 
-    public void keyPressed(KeyEvent e) {
-
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_SPACE) {
-            fire();
-        }
-
-        if (key == KeyEvent.VK_R && !isAlive()) {
-            reset_active = true;
-        }
-
-        if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
-            dy = -CRAFT_SPEED;
-        }
-
-        if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
-            dy = CRAFT_SPEED;
-        }
-    }
-/*    public void keyPressed(KeyEvent e) {
-
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_SPACE) {
-            fire();
-        }
-
-        if (key == KeyEvent.VK_LEFT) {
-            if (getX() <= -80) {
-                x = 800;
-            }
-            else {
-                dx = -1;
-            }
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-            if (getX() >= 800) {
-                x = -80;
-            }
-            else {
-            dx = 1;
-            }
-        }
-
-        if (key == KeyEvent.VK_UP) {
-            if (getY() <= -50) {
-                y = 600;
-            }
-            else {
-            dy = -1;
-            }
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            if (getY() >= 600) {
-                y = -50;
-            }
-            else {
-            dy = 1;
-            }
-        }
-    }*/
-
     public void fire() {
         if (heat <= 1000) {
             missiles.add(new Missile(x + CRAFT_SIZE/2, y));
@@ -195,17 +130,30 @@ public class Craft {
         this.y = 300;
     }
 
-    public void keyReleased(KeyEvent e) {
+
+    public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
 
-/*        if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
-            dx = 0;
+        if (key == KeyEvent.VK_SPACE) {
+            fire();
         }
 
-        if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
-            dx = 0;
-        }*/
+        if (key == KeyEvent.VK_R && !isAlive()) {
+            reset_active = true;
+        }
+
+        if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
+            dy = -CRAFT_SPEED;
+        }
+
+        if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
+            dy = CRAFT_SPEED;
+        }
+    }
+    public void keyReleased(KeyEvent e) {
+
+        int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
             //setDy(0);

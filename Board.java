@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 
@@ -19,33 +20,30 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     public Craft craft;
     private Enemy enemy;
-    private Asteroid asteroid;
+    private int asteroid_count = 0;
     private int score;
     private int lives;
-    private double degrees = 0;
+    private ArrayList as;
 
     private int visible_timer = 100;
+
+    private final int ASTEROID_TOTAL = 2;
 
     private JLabel scoreBoard;
     private JLabel resetRequest;
     private Font sans;
 
-    public ImageIcon background_img = new ImageIcon(this.getClass().getResource("images/background.gif"));
-
-//    private final int STAR_SIZE = 4; We might need this later for star generation
-
     public Board() {
 
         addKeyListener(new TAdapter());
-        //setBackground(Color.black);
-        //setDoubleBuffered(true);
+        setDoubleBuffered(true);
         setOpaque(false);
 
         craft = new Craft();
         enemy = new Enemy();
-        asteroid = new Asteroid();
         score = 0;
         lives = 3;
+        as = new ArrayList();
 
         sans = new Font("Sans-Serif", Font.BOLD, 26);
 
@@ -69,11 +67,7 @@ public class Board extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
 
-        //score_str = String.valueOf(score);
-
         Graphics2D g2d = (Graphics2D) g;
-
-
 
         if (craft.isVisible())
             g2d.drawImage(craft.getImage(), craft.getX(), craft.getY(), this);
@@ -113,13 +107,17 @@ public class Board extends JPanel implements ActionListener {
                 resetRequest.setVisible(true);
             }
         }
-
-        if (asteroid.isActive() && craft.isAlive()) {
-            g2d.rotate(Math.toRadians(degrees+=asteroid.getRotation()), asteroid.getX()+25, asteroid.getY()+25);
-            g2d.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
+        if (asteroid_count != 0)  {
+            for (int i = 0; i < as.size(); i++) {
+                Asteroid a = (Asteroid) as.get(i);
+                if (a.isActive() && craft.isAlive()) {
+                    AffineTransform oldTrans = g2d.getTransform();
+                    g2d.rotate(Math.toRadians(a.getDegrees()), a.getX() + 25, a.getY() + 25);
+                    g2d.drawImage(a.getImage(), a.getX(), a.getY(), this);
+                    g2d.setTransform(oldTrans);
+                }
+            }
         }
-
-
 
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
@@ -132,7 +130,6 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        //setBackground(Color.black); //Only needed this for flickering
         ArrayList ms = craft.getMissiles();
 
         for (int i = 0; i < ms.size(); i++) {
@@ -144,8 +141,6 @@ public class Board extends JPanel implements ActionListener {
                     enemy = new Enemy();
                     ms.remove(i);
                     score++;
-
-
                 }
             }
             else {
@@ -169,20 +164,31 @@ public class Board extends JPanel implements ActionListener {
             craft.cool();
         }
 
-        asteroid.move();
-
-        if (!asteroid.isActive()) {
-            asteroid = new Asteroid();
-            asteroid.setActive(true);
-        }
-        else {
-            if (craft.getX() >= asteroid.getXBoxNeg() && craft.getX() <= asteroid.getXBoxPos() && craft.getY() >= asteroid.getYBoxNeg() && craft.getY() <= asteroid.getYBoxPos()) {
-                lives--;
-                asteroid.setActive(false);
-                craft.setVisible(false);
-            }
+        if (asteroid_count < ASTEROID_TOTAL) {
+            Asteroid a = new Asteroid();
+            a.setActive(true);
+            as.add(a);
+            asteroid_count++;
         }
 
+        for (int i = 0; i < as.size(); i++) {
+            Asteroid a = (Asteroid) as.get(i);
+            if (a.isActive()) {
+                a.move();
+                if (craft.getX() >= a.getXBoxNeg() && craft.getX() <= a.getXBoxPos() && craft.getY() >= a.getYBoxNeg() && craft.getY() <= a.getYBoxPos()) {
+                    lives--;
+                    a.setActive(false);
+                    craft.setVisible(false);
+                    as.remove(i);
+                    asteroid_count--;
+                }
+                else if (a.getX() <= -200) {
+                    as.remove(i);
+                    asteroid_count--;
+                }
+        }
+
+    }
         repaint();
         if (craft.isReset_active())
             reset();
