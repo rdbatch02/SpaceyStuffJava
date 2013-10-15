@@ -1,7 +1,6 @@
 package SpaceyStuff;
 
-import javax.swing.JFrame;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 public class SpaceyStuff extends JFrame {
 

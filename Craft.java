@@ -1,10 +1,8 @@
 package SpaceyStuff;
 
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
-
-import javax.swing.ImageIcon;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -73,10 +71,6 @@ public class Craft {
 
     public ArrayList getMissiles() {
         return missiles;
-    }
-
-    public int getCRAFT_SPEED() {    //Might need this one day if we want to adjust game difficulty
-        return CRAFT_SPEED;
     }
 
     public void fire() {

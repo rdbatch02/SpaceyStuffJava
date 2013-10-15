@@ -1,8 +1,7 @@
 package SpaceyStuff;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
 
 
 public class Missile {
@@ -12,7 +11,6 @@ public class Missile {
     boolean visible;
 
     private final int BOARD_WIDTH = 900;
-    private final int BOARD_HEIGHT = 700;
     private final int MISSILE_SPEED = 3;
 
     public Missile(int x, int y) {
@@ -33,22 +31,6 @@ public class Missile {
 
     public int getY() {
         return y;
-    }
-
-    public int getYBoxPos() {
-        return y + 10;
-    }
-
-    public int getYBoxNeg() {
-        return y - 10;
-    }
-
-    public int getXBoxPos() {
-        return x + 10;
-    }
-
-    public int getXBoxNeg() {
-        return x - 10;
     }
 
     public boolean isVisible() {

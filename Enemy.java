@@ -2,9 +2,9 @@ package SpaceyStuff;
 
 import javax.swing.*;
 import java.awt.*;
-//import java.util.ArrayList;
-
 import java.util.Random;
+
+//import java.util.ArrayList;
 
 public class Enemy {
 
@@ -22,7 +22,6 @@ public class Enemy {
     private Random generator = new Random();
 
     //private int randomX = 100 + (int)(Math.random() * ((750-100) + 1));
-    private int randomY = generator.nextInt(550);
     private int randomShip = generator.nextInt(2);
 
     private String enemy = ships[randomShip];
@@ -31,7 +30,7 @@ public class Enemy {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(enemy));
         image = ii.getImage();
         x = 850;
-        y = randomY;
+        y = generator.nextInt(550);
         alive = true;
 
     }

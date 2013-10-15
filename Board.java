@@ -1,16 +1,11 @@
 package SpaceyStuff;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
-import javax.swing.*;
-
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
@@ -27,7 +22,7 @@ public class Board extends JPanel implements ActionListener {
 
     private int visible_timer = 100;
 
-    private final int ASTEROID_TOTAL = 2;
+    private final int ASTEROID_TOTAL = 3;
 
     private JLabel scoreBoard;
     private JLabel resetRequest;
@@ -85,8 +80,8 @@ public class Board extends JPanel implements ActionListener {
 
         ArrayList ms = craft.getMissiles();
 
-        for (int i = 0; i < ms.size(); i++) {
-            Missile m = (Missile) ms.get(i);
+        for (Object m1 : ms) {
+            Missile m = (Missile) m1;
             g2d.drawImage(m.getImage(), m.getX(), m.getY(), this);
         }
 
@@ -108,11 +103,11 @@ public class Board extends JPanel implements ActionListener {
             }
         }
         if (asteroid_count != 0)  {
-            for (int i = 0; i < as.size(); i++) {
-                Asteroid a = (Asteroid) as.get(i);
+            for (Object a1 : as) {
+                Asteroid a = (Asteroid) a1;
                 if (a.isActive() && craft.isAlive()) {
                     AffineTransform oldTrans = g2d.getTransform();
-                    g2d.rotate(Math.toRadians(a.getDegrees()), a.getX() + 25, a.getY() + 25);
+                    g2d.rotate(Math.toRadians(a.getDegrees()), a.getX() + (a.getWidth() / 2), a.getY() + (a.getHeight() / 2));
                     g2d.drawImage(a.getImage(), a.getX(), a.getY(), this);
                     g2d.setTransform(oldTrans);
                 }

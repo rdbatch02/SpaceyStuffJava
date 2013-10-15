@@ -1,8 +1,7 @@
 package SpaceyStuff;
 
-import java.awt.*;
-import java.awt.image.*;
 import javax.swing.*;
+import java.awt.*;
 
 /*
  *  Support custom painting on a panel in the form of
