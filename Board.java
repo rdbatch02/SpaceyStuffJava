@@ -156,12 +156,13 @@ public class Board extends JPanel implements ActionListener {
         if (enemy.getX() <= -80) {
             enemy.setAlive(false);
             lives--;
-            if (lives == 0) {
-                craft.setAlive(false);
-            }
             if (craft.isAlive()) {
                 enemy = new Enemy();
             }
+        }
+        if (lives == 0) {
+            enemy.setAlive(false);
+            craft.setAlive(false);
         }
         if (craft.isVisible()) {
             craft.move();
