@@ -11,9 +11,8 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-//import java.util.Random;
+
 
 public class Board extends JPanel implements ActionListener {
 
@@ -23,6 +22,7 @@ public class Board extends JPanel implements ActionListener {
     private Asteroid asteroid;
     private int score;
     private int lives;
+    private double degrees = 0;
 
     private int visible_timer = 100;
 
@@ -30,13 +30,16 @@ public class Board extends JPanel implements ActionListener {
     private JLabel resetRequest;
     private Font sans;
 
+    public ImageIcon background_img = new ImageIcon(this.getClass().getResource("images/background.gif"));
+
 //    private final int STAR_SIZE = 4; We might need this later for star generation
 
     public Board() {
 
         addKeyListener(new TAdapter());
-        setBackground(Color.black);
+        //setBackground(Color.black);
         //setDoubleBuffered(true);
+        setOpaque(false);
 
         craft = new Craft();
         enemy = new Enemy();
@@ -70,6 +73,8 @@ public class Board extends JPanel implements ActionListener {
 
         Graphics2D g2d = (Graphics2D) g;
 
+
+
         if (craft.isVisible())
             g2d.drawImage(craft.getImage(), craft.getX(), craft.getY(), this);
         else {
@@ -83,9 +88,6 @@ public class Board extends JPanel implements ActionListener {
         if (enemy.isAlive()) {
             g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
         }
-
-        if (asteroid.isActive() && craft.isAlive())
-            g2d.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
 
         ArrayList ms = craft.getMissiles();
 
@@ -111,6 +113,13 @@ public class Board extends JPanel implements ActionListener {
                 resetRequest.setVisible(true);
             }
         }
+
+        if (asteroid.isActive() && craft.isAlive()) {
+            g2d.rotate(Math.toRadians(degrees+=asteroid.getRotation()), asteroid.getX()+25, asteroid.getY()+25);
+            g2d.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
+        }
+
+
 
         Toolkit.getDefaultToolkit().sync();
         g.dispose();

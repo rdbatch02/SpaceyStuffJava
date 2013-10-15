@@ -9,7 +9,10 @@ public class SpaceyStuff extends JFrame {
     //ImageIcon game_icon = new ImageIcon(this.getClass().getResource("images/icon.png"));
 
     public SpaceyStuff() {
-        add(new Board());
+        ImageIcon background_img = new ImageIcon(this.getClass().getResource("images/background.gif"));
+        BackgroundPanel background = new BackgroundPanel(background_img.getImage(), BackgroundPanel.ACTUAL, 0.50f, 0.5f);
+        this.setContentPane(background);
+        this.getContentPane().add(new Board());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -20,7 +23,6 @@ public class SpaceyStuff extends JFrame {
         ImageIcon taskbarIcon = new ImageIcon("images/taskbar_icon.gif");
         setIconImage(taskbarIcon.getImage());
     }
-
     public static void reset() {
         game.dispose();
         game.setVisible(false);

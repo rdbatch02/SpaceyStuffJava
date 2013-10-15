@@ -8,17 +8,19 @@ import java.util.Random;
 
 public class Asteroid {
 
-    private int x, y;
+    private int x, y, width, height;
     private Image image;
     private boolean active = false;
+    private int ASTEROID_SPEED;
+    private int ROTATION_SPEED;
 
     private Random generator = new Random();
 
     private final int BOARD_WIDTH = 900;
     private final int BOARD_HEIGHT = 700;
-    private final int ASTEROID_SPEED = 1;
 
     private int RandomY = generator.nextInt(550);
+    private int type;
 
     public Asteroid() {
         ImageIcon ii = new ImageIcon(this.getClass().getResource("images/asteroid.png"));
@@ -26,6 +28,10 @@ public class Asteroid {
         this.x = 850;
         this.y = RandomY;
         active = true;
+        type = generator.nextInt(4)+1;
+        System.out.println(type);
+        ASTEROID_SPEED = type;
+        ROTATION_SPEED = type;
     }
 
     public Image getImage() {
@@ -62,6 +68,10 @@ public class Asteroid {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public int getRotation() {
+        return ROTATION_SPEED;
     }
 
     public void move() {
