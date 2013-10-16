@@ -32,9 +32,6 @@ public class Craft {
 
     private String craft = ships[randomShip];
 
-    //private int randomX = generator.nextInt(750);
-    //private int randomY = generator.nextInt(550);
-
     public Craft() {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(craft));
         image = ii.getImage();
@@ -150,12 +147,10 @@ public class Craft {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
-            //setDy(0);
             dy = 0;
         }
 
         if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
-            //setDy(0);
             dy = 0;
         }
     }

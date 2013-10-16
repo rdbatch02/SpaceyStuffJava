@@ -52,8 +52,6 @@ public class Board extends JPanel implements ActionListener {
         resetRequest.setFont(sans);
         resetRequest.setVisible(false);
 
-        
-
         timer = new Timer(5, this);
         timer.start();
         setFocusable(true);
@@ -152,6 +150,7 @@ public class Board extends JPanel implements ActionListener {
         }
         if (lives == 0) {
             enemy.setAlive(false);
+            as.clear();
             craft.setAlive(false);
         }
         if (craft.isVisible()) {
@@ -166,25 +165,27 @@ public class Board extends JPanel implements ActionListener {
             asteroid_count++;
         }
 
-        for (int i = 0; i < as.size(); i++) {
-            Asteroid a = (Asteroid) as.get(i);
-            if (a.isActive()) {
-                a.move();
-                if (craft.getX() >= a.getXBoxNeg() && craft.getX() <= a.getXBoxPos() && craft.getY() >= a.getYBoxNeg() && craft.getY() <= a.getYBoxPos()) {
-                    lives--;
-                    a.setActive(false);
-                    craft.setVisible(false);
-                    as.remove(i);
-                    asteroid_count--;
-                }
-                else if (a.getX() <= -200) {
-                    as.remove(i);
-                    asteroid_count--;
-                }
-        }
+        if (craft.isAlive()){
+            for (int i = 0; i < as.size(); i++) {
+                Asteroid a = (Asteroid) as.get(i);
+                if (a.isActive()) {
+                    a.move();
+                    if (craft.getX() >= a.getXBoxNeg() && craft.getX() <= a.getXBoxPos() && craft.getY() >= a.getYBoxNeg() && craft.getY() <= a.getYBoxPos()) {
+                        lives--;
+                        a.setActive(false);
+                        craft.setVisible(false);
+                        as.remove(i);
+                        asteroid_count--;
+                    }
+                    else if (a.getX() <= -200) {
+                        as.remove(i);
+                        asteroid_count--;
+                    }
+            }
 
-    }
-        repaint();
+            }
+        }
+            repaint();
         if (craft.isReset_active())
             reset();
     }
