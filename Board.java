@@ -143,7 +143,7 @@ public class Board extends JPanel implements ActionListener {
         enemy.move();
         if (enemy.getX() <= -80) {
             enemy.setAlive(false);
-            lives--;
+            //lives--; //For now, you don't lose lives for letting enemies get away.
             if (craft.isAlive()) {
                 enemy = new Enemy();
             }

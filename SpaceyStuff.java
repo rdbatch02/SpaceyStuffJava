@@ -5,7 +5,6 @@ import javax.swing.*;
 public class SpaceyStuff extends JFrame {
 
     public static SpaceyStuff game;
-    //ImageIcon game_icon = new ImageIcon(this.getClass().getResource("images/icon.png"));
 
     public SpaceyStuff() {
         ImageIcon background_img = new ImageIcon(this.getClass().getResource("images/background.gif"));
@@ -22,12 +21,10 @@ public class SpaceyStuff extends JFrame {
         ImageIcon taskbarIcon = new ImageIcon("images/taskbar_icon.gif");
         setIconImage(taskbarIcon.getImage());
     }
-    public static void reset() {
-        game.dispose();
-        game.setVisible(false);
-        game = new SpaceyStuff();
-    }
 
+    public static void reset() {
+        StartScreen.reset();
+    }
 
     public static void main(String[] args) {
         //System.out.println("Let's do this!");

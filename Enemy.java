@@ -18,6 +18,7 @@ public class Enemy {
     private String[] ships = new String[]{"images/BaddieShip.png", "images/BaddieShip2.png"};
 
     private final int ENEMY_SPEED = 2;
+    private final int HIT_BOX = 22;
 
     private Random generator = new Random();
 
@@ -49,19 +50,19 @@ public class Enemy {
     }
 
     public int getYBoxPos() {
-        return y + 20;
+        return y + HIT_BOX;
     }
 
     public int getYBoxNeg() {
-        return y - 20;
+        return y - HIT_BOX;
     }
 
     public int getXBoxPos() {
-        return x + 20;
+        return x + HIT_BOX;
     }
 
     public int getXBoxNeg() {
-        return x - 20;
+        return x - HIT_BOX;
     }
 
     public Image getImage() {
