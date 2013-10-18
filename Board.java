@@ -19,6 +19,9 @@ public class Board extends JPanel implements ActionListener {
     private int score;
     private int lives;
     private ArrayList as;
+    private int multiplier = 1;
+    private int m_incrementer = 1;
+    private int level = 1;
 
     private int visible_timer = 100;
 
@@ -42,7 +45,7 @@ public class Board extends JPanel implements ActionListener {
 
         sans = new Font("Sans-Serif", Font.BOLD, 26);
 
-        scoreBoard = new JLabel("Score: " + String.valueOf(score) + " Lives: " + String.valueOf(lives));
+        scoreBoard = new JLabel("Score: " + String.valueOf(score) + " Lives: " + String.valueOf(lives) + " Multiplier: " + String.valueOf(multiplier));
         scoreBoard.setForeground(Color.white);
         scoreBoard.setFont(sans);
         add(scoreBoard);
@@ -86,7 +89,7 @@ public class Board extends JPanel implements ActionListener {
         if (craft.getHeat() >= 950)
             scoreBoard.setText("Weapon Overheat!");
         else
-            scoreBoard.setText("Score: " + String.valueOf(score) + " Lives: " + String.valueOf(lives));
+            scoreBoard.setText("Score: " + String.valueOf(score) + " Lives: " + String.valueOf(lives) + " Multiplier: " + String.valueOf(multiplier));
         if (!craft.isAlive()) {
             if (!craft.isReset_active()) {
                 scoreBoard.setText("You Lose! Final Score: " + String.valueOf(score));
@@ -133,7 +136,12 @@ public class Board extends JPanel implements ActionListener {
                     enemy.setAlive(false);
                     enemy = new Enemy();
                     ms.remove(i);
-                    score++;
+                    score += multiplier;
+                    m_incrementer++;
+                    if (m_incrementer > 5) {
+                        m_incrementer = 0;
+                        multiplier++;
+                    }
                 }
             }
             else {
@@ -144,6 +152,8 @@ public class Board extends JPanel implements ActionListener {
         if (enemy.getX() <= -80) {
             enemy.setAlive(false);
             //lives--; //For now, you don't lose lives for letting enemies get away.
+            multiplier = 1;
+            m_incrementer = 0;
             if (craft.isAlive()) {
                 enemy = new Enemy();
             }
@@ -176,8 +186,10 @@ public class Board extends JPanel implements ActionListener {
                         craft.setVisible(false);
                         as.remove(i);
                         asteroid_count--;
+                        multiplier = 1;
+                        m_incrementer = 0;
                     }
-                    else if (a.getX() <= -200) {
+                    else if (a.getX() <= -60) {
                         as.remove(i);
                         asteroid_count--;
                     }

@@ -79,6 +79,7 @@ public class StartScreen extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if ("startGame".equals(e.getActionCommand())) {
             startGame();
+            dispose();
         }
         if ("about".equals(e.getActionCommand())) {
             openDuplex();
