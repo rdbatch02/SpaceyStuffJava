@@ -8,13 +8,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.io.*;
 
 
 public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
-    public Craft craft;
     private Enemy enemy;
+    private Craft craft;
     private int asteroid_count = 0;
     private int score;
     private int lives;
@@ -22,6 +23,7 @@ public class Board extends JPanel implements ActionListener {
     private int multiplier = 1;
     private int m_incrementer = 1;
     private int level = 1;
+    private boolean onCabinet;
 
     private int visible_timer = 100;
 
@@ -33,13 +35,17 @@ public class Board extends JPanel implements ActionListener {
 
     public Board() {
 
+        //onCabinet = isCab();
+
         addKeyListener(new TAdapter());
         setDoubleBuffered(true);
         setOpaque(false);
 
+        //craft = new Craft(onCabinet);
         craft = new Craft();
         enemy = new Enemy();
         score = 0;
+        int multiplier = 1;
         lives = 3;
         as = new ArrayList();
 
@@ -55,7 +61,7 @@ public class Board extends JPanel implements ActionListener {
         resetRequest.setFont(sans);
         resetRequest.setVisible(false);
 
-        timer = new Timer(5, this);
+        timer = new Timer(15, this);
         timer.start();
         setFocusable(true);
     }
@@ -201,6 +207,29 @@ public class Board extends JPanel implements ActionListener {
         if (craft.isReset_active())
             reset();
     }
+
+    /*private boolean isCab() {
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("config.txt"));
+            if (br.readLine() == "true") {
+                System.err.println("Config accepted, entering game cabinet mode!");
+                return true;
+            }
+            else {
+                System.err.println("Config rejected, reverting to PC mode.");
+                return false;
+            }
+        }
+        catch(FileNotFoundException b) {
+            System.err.println("Config file not found! Reverting to PC mode.");
+            return false;
+        }
+        catch(IOException b) {
+            System.err.println("Config file not found! Revering to PC mode.");
+            return false;
+        }
+    }*/
 
     private class TAdapter extends KeyAdapter {
 

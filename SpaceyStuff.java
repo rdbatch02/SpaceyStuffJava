@@ -10,7 +10,8 @@ public class SpaceyStuff extends JFrame {
         ImageIcon background_img = new ImageIcon(this.getClass().getResource("images/background.gif"));
         BackgroundPanel background = new BackgroundPanel(background_img.getImage(), BackgroundPanel.ACTUAL, 0.50f, 0.5f);
         this.setContentPane(background);
-        this.getContentPane().add(new Board());
+        Board b = new Board();
+        this.getContentPane().add(b);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -23,7 +24,7 @@ public class SpaceyStuff extends JFrame {
     }
 
     public static void reset() {
-        StartScreen.reset();
+        game = new SpaceyStuff();
     }
 
     public static void main(String[] args) {

@@ -1,12 +1,16 @@
 package SpaceyStuff;
 
+/*
+Identical copy of Craft.java with some keybindings changed for the game cabinet
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Craft {
+public class CraftCabinet {
 
     //private int dx;
     private int dy;
@@ -32,7 +36,7 @@ public class Craft {
 
     private String craft = ships[randomShip];
 
-    public Craft() {
+    public CraftCabinet() {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(craft));
         image = ii.getImage();
         missiles = new ArrayList();
@@ -126,35 +130,31 @@ public class Craft {
 
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_SPACE) {
+        if (key == KeyEvent.VK_R) { //Cab = A
             fire();
         }
 
-        if (key == KeyEvent.VK_R && !isAlive()) {
+        if (key == KeyEvent.VK_H && !isAlive()) { //Cab = F
             reset_active = true;
         }
 
-        if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
+        if (key == KeyEvent.VK_W) { //Cab = UP
             dy = -CRAFT_SPEED;
         }
 
-        if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
+        if (key == KeyEvent.VK_S) { //Cab = DOWN
             dy = CRAFT_SPEED;
-        }
-
-        if (key == KeyEvent.VK_3) {
-            System.exit(0);
         }
     }
     public void keyReleased(KeyEvent e) {
 
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
+        if (key == KeyEvent.VK_W) {
             dy = 0;
         }
 
-        if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
+        if (key == KeyEvent.VK_S) {
             dy = 0;
         }
     }
